@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 public class LargeOceanFeature extends Feature<NoneFeatureConfiguration> {
     private static final int SEA_LEVEL = 0; // Sea level height
-    private static final int OCEAN_DEPTH = 500; // Maximum depth of the ocean
+    private static final int OCEAN_DEPTH = 5000; // Maximum depth of the ocean
     private static final int OCEAN_RADIUS = 1500; // Radius of the ocean
 
     public LargeOceanFeature() {
@@ -20,7 +20,7 @@ public class LargeOceanFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     @Override
-    public boolean place(@NotNull FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(@NotNull @javax.annotation.Nonnull FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel world = context.level();
         BlockPos pos = context.origin();
         RandomSource random = context.random();

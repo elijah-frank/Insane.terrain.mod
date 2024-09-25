@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:overworld",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": {
+      "bedrock_roof_position": -5762,
+      "bedrock_floor_position": -5762,
+      "sea_level": -62,
+      "disable_mob_generation": false,
+      "noise": {
+        "min_y": -5762,
+        "height": 5438,
+        "size_horizontal": 1,
+        "size_vertical": 2,
+        "density_factor": 1.0,
+        "density_offset": -0.46875,
+        "simplex_surface_noise": true,
+        "random_density_offset": true,
+        "island_noise_override": false,
+        "amplified": false
+      },
+      "default_block": {
+        "Name": "minecraft:stone"
+      },
+      "default_fluid": {
+        "Name": "minecraft:water"
+      },
+      "biome_source": {
+        "type": "minecraft:multi_noise",
+        "preset": "minecraft:overworld"
+      }
+    }
+  }
+}

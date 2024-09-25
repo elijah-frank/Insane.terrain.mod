@@ -16,5 +16,6 @@ public class InsaneTerrain {
         
         // Register the features to the mod event bus
         ModFeatures.FEATURES.register(modEventBus);
+    
     }
 }

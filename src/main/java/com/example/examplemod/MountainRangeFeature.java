@@ -11,9 +11,10 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class MountainRangeFeature extends Feature<NoneFeatureConfiguration> {
-    private static final int SEA_LEVEL = 0;
-    private static final int MAX_HEIGHT = 600;
-    private static final int CLOUD_LEVEL = 205; // Cloud level at Y=150
+    private static final int SEA_LEVEL = 0; // Sea level set to 0
+    private static final int MAX_HEIGHT = 5500; // Max height is 5500 blocks
+    private static final int MIN_HEIGHT = 2000; // Minimum height for mountains
+    private static final int CLOUD_LEVEL = 5200; // Cloud level at Y=5200
     private static final int LAKE_CHANCE = 10; // 1 in 10 chance for a lake
     private static final int TERRACOTTA_CHANCE = 20; // 1 in 5 chance for terracotta cliffs
     private static final int SNOWY_PEAK_CHANCE = 30; // 1 in 3 chance for snowy peaks
@@ -33,7 +34,7 @@ public class MountainRangeFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private void generateMountain(WorldGenLevel world, BlockPos pos, RandomSource random) {
-        int peakHeight = SEA_LEVEL + 200 + random.nextInt(MAX_HEIGHT - 200); // Mountains start at Y=200 up to Y=600
+        int peakHeight = SEA_LEVEL + MIN_HEIGHT + random.nextInt(MAX_HEIGHT - MIN_HEIGHT); // Ensure minimum height of 2000
         int radius = 20 + random.nextInt(40);
 
         boolean hasTerracottaCliffs = random.nextInt(100) < TERRACOTTA_CHANCE;
