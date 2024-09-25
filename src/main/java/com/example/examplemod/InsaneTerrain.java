@@ -16,8 +16,5 @@ public class InsaneTerrain {
         
         // Register the features to the mod event bus
         ModFeatures.FEATURES.register(modEventBus);
-        
-        // Register the LargeOceanFeature
-        ModFeatures.FEATURES.register("large_ocean_feature", () -> new LargeOceanFeature());
     }
 }
