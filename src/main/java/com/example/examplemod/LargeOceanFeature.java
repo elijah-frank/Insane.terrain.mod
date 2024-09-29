@@ -11,16 +11,13 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class LargeOceanFeature extends Feature<NoneFeatureConfiguration> {
-    private static final int SEA_LEVEL = 0; // Sea level height
-    private static final int OCEAN_DEPTH = 5000; // Maximum depth of the ocean
-    private static final int OCEAN_RADIUS = 1500; // Radius of the ocean
 
     public LargeOceanFeature() {
         super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(@NotNull @javax.annotation.Nonnull FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(@NotNull FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel world = context.level();
         BlockPos pos = context.origin();
         RandomSource random = context.random();
@@ -32,13 +29,13 @@ public class LargeOceanFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private void generateOcean(WorldGenLevel world, BlockPos pos, RandomSource random) {
-        int oceanRadius = OCEAN_RADIUS; // Fixed radius for simplicity
+        int oceanRadius = Constants.OCEAN_RADIUS; // Fixed radius for simplicity
 
         for (int x = -oceanRadius; x <= oceanRadius; x++) {
             for (int z = -oceanRadius; z <= oceanRadius; z++) {
                 if (x * x + z * z <= oceanRadius * oceanRadius) { // Check if within circular area
-                    for (int y = SEA_LEVEL; y > SEA_LEVEL - OCEAN_DEPTH; y--) {
-                        BlockPos waterPos = pos.offset(x, y - SEA_LEVEL, z);
+                    for (int y = Constants.SEA_LEVEL; y > Constants.SEA_LEVEL - Constants.OCEAN_DEPTH; y--) {
+                        BlockPos waterPos = pos.offset(x, y - Constants.SEA_LEVEL, z);
                         world.setBlock(waterPos, Blocks.WATER.defaultBlockState(), 2); // Set water block
                     }
                 }
@@ -56,7 +53,7 @@ public class LargeOceanFeature extends Feature<NoneFeatureConfiguration> {
                     continue;
                 }
 
-                for (int y = SEA_LEVEL + 1; y <= SEA_LEVEL + 10; y++) {
+                for (int y = Constants.SEA_LEVEL + 1; y <= Constants.SEA_LEVEL + 10; y++) {
                     BlockPos terrainPos = pos.offset(x, y, z);
                     if (world.getBlockState(terrainPos).is(Blocks.STONE) || world.getBlockState(terrainPos).is(Blocks.DIRT)) {
                         world.setBlock(terrainPos, Blocks.SAND.defaultBlockState(), 2);

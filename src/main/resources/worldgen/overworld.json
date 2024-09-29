@@ -4,13 +4,13 @@
     "type": "minecraft:noise",
     "seed": 0,
     "settings": {
-      "bedrock_roof_position": -5762,
-      "bedrock_floor_position": -5762,
-      "sea_level": -62,
+      "bedrock_roof_position": -5000,
+      "bedrock_floor_position": 5000,
+      "sea_level": 0,
       "disable_mob_generation": false,
       "noise": {
-        "min_y": -5762,
-        "height": 5438,
+        "min_y": -5000,
+        "height": 10000,
         "size_horizontal": 1,
         "size_vertical": 2,
         "density_factor": 1.0,

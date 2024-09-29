@@ -15,7 +15,6 @@ public class InsaneTerrain {
         LOGGER.info("InsaneTerrain mod initialized");
         
         // Register the features to the mod event bus
-        ModFeatures.FEATURES.register(modEventBus);
-    
+        ModFeatures.registerFeatures(modEventBus);
     }
 }

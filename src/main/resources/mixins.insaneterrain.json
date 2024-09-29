@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.example.examplemod.mixin",
+  "refmap": "mixins.insaneterrain.refmap.json",
+  "target": "@env(DEFAULT)",
+  "mixins": [
+    "BlockPosMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

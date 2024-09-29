@@ -11,13 +11,6 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class MountainRangeFeature extends Feature<NoneFeatureConfiguration> {
-    private static final int SEA_LEVEL = 0; // Sea level set to 0
-    private static final int MAX_HEIGHT = 5500; // Max height is 5500 blocks
-    private static final int MIN_HEIGHT = 2000; // Minimum height for mountains
-    private static final int CLOUD_LEVEL = 5200; // Cloud level at Y=5200
-    private static final int LAKE_CHANCE = 10; // 1 in 10 chance for a lake
-    private static final int TERRACOTTA_CHANCE = 20; // 1 in 5 chance for terracotta cliffs
-    private static final int SNOWY_PEAK_CHANCE = 30; // 1 in 3 chance for snowy peaks
 
     public MountainRangeFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -34,35 +27,35 @@ public class MountainRangeFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private void generateMountain(WorldGenLevel world, BlockPos pos, RandomSource random) {
-        int peakHeight = SEA_LEVEL + MIN_HEIGHT + random.nextInt(MAX_HEIGHT - MIN_HEIGHT); // Ensure minimum height of 2000
+        int peakHeight = Constants.SEA_LEVEL + Constants.MOUNTAIN_MIN_HEIGHT + random.nextInt(Constants.MOUNTAIN_MAX_HEIGHT - Constants.MOUNTAIN_MIN_HEIGHT);
         int radius = 20 + random.nextInt(40);
 
-        boolean hasTerracottaCliffs = random.nextInt(100) < TERRACOTTA_CHANCE;
-        boolean hasSnowyPeaks = random.nextInt(100) < SNOWY_PEAK_CHANCE;
+        boolean hasTerracottaCliffs = random.nextInt(100) < Constants.TERRACOTTA_CHANCE;
+        boolean hasSnowyPeaks = random.nextInt(100) < Constants.SNOWY_PEAK_CHANCE;
 
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
                 if (x * x + z * z <= radius * radius) {
-                    int height = peakHeight - (int) Math.sqrt(x * x + z * z) * (peakHeight - SEA_LEVEL) / radius;
-                    for (int y = SEA_LEVEL; y <= height; y++) {
-                        if (hasTerracottaCliffs && y > SEA_LEVEL + (height - SEA_LEVEL) / 2) {
-                            world.setBlock(pos.offset(x, y - SEA_LEVEL, z), Blocks.TERRACOTTA.defaultBlockState(), 2);
-                        } else if (hasSnowyPeaks && y > CLOUD_LEVEL) { // Only add snow if above cloud level
-                            world.setBlock(pos.offset(x, y - SEA_LEVEL, z), Blocks.SNOW_BLOCK.defaultBlockState(), 2);
+                    int height = peakHeight - (int) Math.sqrt(x * x + z * z) * (peakHeight - Constants.SEA_LEVEL) / radius;
+                    for (int y = Constants.SEA_LEVEL; y <= height; y++) {
+                        if (hasTerracottaCliffs && y > Constants.SEA_LEVEL + (height - Constants.SEA_LEVEL) / 2) {
+                            world.setBlock(pos.offset(x, y - Constants.SEA_LEVEL, z), Blocks.TERRACOTTA.defaultBlockState(), 2);
+                        } else if (hasSnowyPeaks && y > Constants.CLOUD_LEVEL) { // Only add snow if above cloud level
+                            world.setBlock(pos.offset(x, y - Constants.SEA_LEVEL, z), Blocks.SNOW_BLOCK.defaultBlockState(), 2);
                         } else {
-                            world.setBlock(pos.offset(x, y - SEA_LEVEL, z), Blocks.STONE.defaultBlockState(), 2);
+                            world.setBlock(pos.offset(x, y - Constants.SEA_LEVEL, z), Blocks.STONE.defaultBlockState(), 2);
                         }
                     }
-                    if (hasSnowyPeaks && height > CLOUD_LEVEL) { // Only add snow layer if above cloud level
-                        world.setBlock(pos.offset(x, height - SEA_LEVEL + 1, z), Blocks.SNOW.defaultBlockState(), 2);
+                    if (hasSnowyPeaks && height > Constants.CLOUD_LEVEL) { // Only add snow layer if above cloud level
+                        world.setBlock(pos.offset(x, height - Constants.SEA_LEVEL + 1, z), Blocks.SNOW.defaultBlockState(), 2);
                     } else {
-                        world.setBlock(pos.offset(x, height - SEA_LEVEL + 1, z), Blocks.GRASS_BLOCK.defaultBlockState(), 2);
+                        world.setBlock(pos.offset(x, height - Constants.SEA_LEVEL + 1, z), Blocks.GRASS_BLOCK.defaultBlockState(), 2);
                     }
                 }
             }
         }
 
-        if (random.nextInt(LAKE_CHANCE) == 0) {
+        if (random.nextInt(Constants.LAKE_CHANCE) == 0) {
             generateMountainTopLake(world, new BlockPos(pos.getX(), peakHeight, pos.getZ()), random, hasSnowyPeaks);
         }
     }
@@ -75,7 +68,7 @@ public class MountainRangeFeature extends Feature<NoneFeatureConfiguration> {
             for (int z = -lakeRadius; z <= lakeRadius; z++) {
                 if (x * x + z * z <= lakeRadius * lakeRadius) {
                     for (int y = 0; y >= -lakeDepth; y--) {
-                        if (isSnowy && pos.getY() > CLOUD_LEVEL) {
+                        if (isSnowy && pos.getY() > Constants.CLOUD_LEVEL) {
                             world.setBlock(pos.offset(x, y, z), y == 0 ? Blocks.ICE.defaultBlockState() : Blocks.SNOW_BLOCK.defaultBlockState(), 2);
                         } else {
                             world.setBlock(pos.offset(x, y, z), y == 0 ? Blocks.WATER.defaultBlockState() : Blocks.STONE.defaultBlockState(), 2);
